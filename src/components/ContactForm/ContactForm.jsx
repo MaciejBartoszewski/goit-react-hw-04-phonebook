@@ -9,18 +9,23 @@ export const ContactForm = ({ handleAddContact, contacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const changeHandler = ({ target: { name, value } }) => {
-    setName(prevState => ({ ...prevState, [name]: value }));
+  const changeHandler = event => {
+    switch (event.target.name) {
+      case 'name':
+        setName(event.target.value);
+        break;
+      case 'number':
+        setNumber(event.target.value);
+        break;
+    }
   };
 
   const submitHandler = event => {
-    // const { handleAddContact, contacts } = this.props;
     event.preventDefault();
     const newContact = {
       name: name,
       number: number,
     };
-
     contacts.some(contact => contact.name === name)
       ? alert(`${name} is already in contacts`)
       : handleAddContact({ ...newContact });
@@ -28,6 +33,7 @@ export const ContactForm = ({ handleAddContact, contacts }) => {
     setName('');
     setNumber('');
   };
+  ;
 
   return (
     <form onSubmit={submitHandler}>
@@ -68,5 +74,5 @@ ContactForm.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
     number: PropTypes.string,
-  }))
-}
+  })),
+};
